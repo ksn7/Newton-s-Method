@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Newton's Method</title>
+    <script src="https://sagecell.sagemath.org/static/jquery.min.js"></script>
+    <script src="https://sagecell.sagemath.org/embedded_sagecell.js"></script>
+    <script>
+$(function () {
+    // Make *any* div with class 'compute' a Sage cell
+    sagecell.makeSagecell({inputLocation: 'div.compute',
+    						template:       sagecell.templates.minimal,
+                           evalButtonText: 'Launch the Interactive Applet Now'});
+});
+    </script>
+  </head>
+  <body style="width: 1000px;">
+
+  <h1>Newton's Method</h1>
+
+<p>An Interactive Applet powered by Sage and MathJax.</p>
+<p>(By Kelsey Norman with HTML code from Prof. Gregory V. Bard)</p>
+
+<hr>
+
+<div class="compute">
+<script type="text/x-sage">
+
+@interact( layout = [ ['func'], ['eval', 'n'], ['x_min', 'x_max'], ['y_min', 'y_max'] ])
+def newton( func = input_box( default = x^2 -1, label = "function", width = 20), 
+        eval = input_box( default = 2, label = "starting point", width = 5), 
+        n = input_box( default = 3, label = "number of iterations", width = 5), 
+        x_min = input_box( default = -1, label = "x min", width = 5), 
+        x_max = input_box( default = 3, label = "x max", width = 5), 
+        y_min = input_box( default = -2, label = "y min", width = 5), 
+        y_max = input_box( default = 8, label = "y max", width = 5) ):
+            
+    f = func.function(x)
+    graph = plot( f, x_min, x_max, ymin = y_min, ymax = y_max)
+
+    for j in range(n):
+        dashed = line( [(eval, f(eval)), (eval, 0)], linestyle = "--", color = '#66a3ff')
+        pt = plot( point( (eval, f(eval)), color = 'red', size = 20 ))
+        graph += dashed
+        deriv = diff(f,x)(eval) * (x - eval) + f(eval)
+        graph += plot( deriv, (x, x_min, x_max), color = 'yellow')
+        graph += pt
+        eval = find_root( deriv, x_min, x_max)
+    
+    graph.show()
+
+</script>
+</div>
+
+<hr>
+Last modified on June 9th, 2017.
+</body>
+</html>
