@@ -39,21 +39,29 @@ def newton( func = input_box( default = x^2 -1, label = "function", width = 20),
     f = func.function(x)
     graph = plot( f, x_min, x_max, ymin = y_min, ymax = y_max)
 
-    for j in range(n):
-        dashed = line( [(eval, f(eval)), (eval, 0)], linestyle = "--", color = '#66a3ff')
-        pt = plot( point( (eval, f(eval)), color = 'red', size = 20 ))
-        graph += dashed
-        deriv = diff(f,x)(eval) * (x - eval) + f(eval)
-        graph += plot( deriv, (x, x_min, x_max), color = 'yellow')
-        graph += pt
-        eval = find_root( deriv, x_min, x_max)
-    
+    try:
+        for j in range(n):
+            print "Approximation " + str(j) + ": " + str(eval)
+            dashed = line( [(eval, f(eval)), (eval, 0)], linestyle = "--", color = '#66a3ff')
+            pt = plot( point( (eval, f(eval)), color = 'red', size = 20 ))
+            graph += dashed
+            deriv = diff(f,x)(eval) * (x - eval) + f(eval)
+            graph += plot( deriv, (x, x_min, x_max), color = 'yellow')
+            graph += pt
+            eval = find_root( deriv, x_min, x_max)
+        
+        root = find_root( f, x_min, x_max)
+        print "The actual root is at " + str(root)
+        
+    except:
+        print "There is no root in this region, so Newton's method does not show anything of significance.
+        
     graph.show()
-
+    
 </script>
 </div>
 
 <hr>
-Last modified on June 9th, 2017.
+Last modified on June 12th, 2017.
 </body>
 </html>
