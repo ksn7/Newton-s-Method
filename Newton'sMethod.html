@@ -40,28 +40,44 @@ def newton( func = input_box( default = x^2 -1, label = "function", width = 20),
     graph = plot( f, x_min, x_max, ymin = y_min, ymax = y_max)
 
     try:
-        for j in range(n):
+        for j in range(n+1):
             print "Approximation " + str(j) + ": " + str(eval)
-            dashed = line( [(eval, f(eval)), (eval, 0)], linestyle = "--", color = '#66a3ff')
+            dashed = line( [(eval, f(eval)), (eval, 0)], linestyle = "--", color = '#ff5c33')
             pt = plot( point( (eval, f(eval)), color = 'red', size = 20 ))
-            graph += dashed
             deriv = diff(f,x)(eval) * (x - eval) + f(eval)
-            graph += plot( deriv, (x, x_min, x_max), color = 'yellow')
-            graph += pt
-            eval = find_root( deriv, x_min, x_max)
+            
+            if f(eval) <= y_max and y_min <= f(eval) :
+                label = text( str(j), (eval, f(eval) + (y_max - y_min)/12) )
+            elif f(eval) >= 0 :
+                label = text( str(j), (eval, y_max - (y_max - y_min)/12) )
+            else:
+                label = text( str(j), (eval, y_min + (y_max - y_min)/12) )
+                
+            if x_min <= eval and eval <= x_max:
+                graph += label
+                graph += dashed
+                graph += plot( deriv, (x, x_min, x_max), color = '#00cc00')
+                graph += pt
+            eval = find_root( deriv, -100, 100)
         
-        root = find_root( f, x_min, x_max)
-        print "The actual root is at " + str(root)
+        for j in range(50):
+            deriv = diff(f,x)(eval) * (x - eval) + f(eval)
+            new_eval = find_root(deriv, -100, 100)
+            print "Worked for " + str(j)
+            if (new_eval - eval) < 10^-12:
+                break
+            eval = new_eval
+        print "The actual root is at " + str(new_eval) + ", accurate to 10^-12."
         
     except:
-        print "There is no root in this region, so Newton's method does not show anything of significance.
-        
+        print "What went wrong??? :("   
+    
     graph.show()
     
 </script>
 </div>
 
 <hr>
-Last modified on June 12th, 2017.
+Last modified on June 13th, 2017.
 </body>
 </html>
