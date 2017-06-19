@@ -28,7 +28,7 @@ $(function () {
 <script type="text/x-sage">
 
 @interact( layout = [ ['func'], ['eval', 'n'], ['x_min', 'x_max'], ['y_min', 'y_max'] ])
-def newton( func = input_box( default = x^2 -1, label = "function", width = 20), 
+def newton( func = input_box( default = x^2 -1, label = "f(x) = ", width = 20), 
         eval = input_box( default = 2, label = "starting point", width = 5), 
         n = input_box( default = 3, label = "number of iterations", width = 5), 
         x_min = input_box( default = -1, label = "x min", width = 5), 
@@ -64,24 +64,24 @@ def newton( func = input_box( default = x^2 -1, label = "function", width = 20),
             if x_min <= eval and eval <= x_max:
                 graph += label
                 graph += dashed
-                graph += plot( deriv, (x, x_min, x_max), color = '#00cc00')
+                graph += plot( deriv, (x, x_min, x_max), color = (0, j * 1/n, 0) )
                 graph += pt
             eval = find_root( deriv, -100, 100)
         
-        # Use Newton's Method to find the actual root, through 1000 iterations 
+        # Use Newton's Method to find the actual root, through 50 iterations 
         # or until the iterations get close enoug
         for j in range(50):
             deriv = diff(f,x)(eval) * (x - eval) + f(eval)
             new_eval = find_root(deriv, -100, 100)
-            print "Worked for " + str(j)
-            if (new_eval - eval) < 10^-12:
+            print "new_eval - eval = " + str(new_eval - eval)
+            if abs(new_eval - eval) < 10^-12:
                 break
             eval = new_eval
         print "The actual root is at " + str(new_eval) + ", accurate to 10^-12."
         
     # Exception just in case    
     except:
-        print "What went wrong??? :("   
+        print "Something went wrong. Try checking your boundaries and starting points."   
     
     # Show the graph!
     graph.show()
@@ -90,6 +90,6 @@ def newton( func = input_box( default = x^2 -1, label = "function", width = 20),
 </div>
 
 <hr>
-Last modified on June 15th, 2017.
+Last modified on June 19th, 2017.
 </body>
 </html>
