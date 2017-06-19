@@ -66,18 +66,23 @@ def newton( func = input_box( default = x^2 -1, label = "f(x) = ", width = 20),
                 graph += dashed
                 graph += plot( deriv, (x, x_min, x_max), color = (0, j * 1/n, 0) )
                 graph += pt
-            eval = find_root( deriv, -100, 100)
+            eval = find_root( deriv, -1000000, 1000000)
         
         # Use Newton's Method to find the actual root, through 50 iterations 
         # or until the iterations get close enoug
         for j in range(50):
             deriv = diff(f,x)(eval) * (x - eval) + f(eval)
-            new_eval = find_root(deriv, -100, 100)
-            print "new_eval - eval = " + str(new_eval - eval)
+            try:
+                new_eval = find_root(deriv, -1000000, 1000000)
+            except:
+                print "The approximations do not converge."
+                break
             if abs(new_eval - eval) < 10^-12:
+                print "The actual root is at " + str(new_eval) + ", accurate to 10^-12."
                 break
             eval = new_eval
-        print "The actual root is at " + str(new_eval) + ", accurate to 10^-12."
+            if j == 49:
+                print "After 50 iterations, the approximations do not converge."        
         
     # Exception just in case    
     except:
