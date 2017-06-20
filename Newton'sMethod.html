@@ -24,6 +24,21 @@ $(function () {
 
 <hr>
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script src="jquery.jslatex.js"></script>
+
+<script>
+$(function () {
+    $(".latex").latex();
+});
+</script>
+
+<div class="latex">
+    \textrm{An interactive demo to show the iterations of Newton's method to find the roots of a function, given by the formula}
+    \\
+    x_1 = x_0 - \frac{f(x_0)}{f'(x_0)}.
+</div>
+
 <div class="compute">
 <script type="text/x-sage">
 
@@ -90,11 +105,11 @@ def newton( func = input_box( default = x^2 -1, label = "f(x) = ", width = 20),
     
     # Show the graph!
     graph.show()
-    
+
 </script>
 </div>
 
 <hr>
-Last modified on June 19th, 2017.
+Last modified on June 20th, 2017.
 </body>
 </html>
