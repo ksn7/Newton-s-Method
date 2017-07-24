@@ -54,13 +54,19 @@ def newton( func = input_box( default = x^2 -1, label = "f(x) = ", width = 20),
     # Avoid the deprecation warning and prep the function graph        
     f = func.function(x)
     graph = plot( f, x_min, x_max, ymin = y_min, ymax = y_max)
+    text1 = ""
 
     # Try and except blocks left from when this threw a ton of errors
     try:
+        
         # Do Newton's Method for the specified approximations
         for j in range(n+1):
+
             # Print the approximation at a point, draw a dashed line to the approx, draw the point
-            print "Approximation " + str(j) + ": " + str(eval)
+            if j == n :
+                text1 += "Approximation " + str(j) + ": " + str(eval)
+            else:
+                text1 += "Approximation " + str(j) + ": " + str(eval) + "\n"
             dashed = line( [(eval, f(eval)), (eval, 0)], linestyle = "--", color = '#ff5c33')
             pt = plot( point( (eval, f(eval)), color = 'red', size = 20 ))
             
@@ -83,25 +89,28 @@ def newton( func = input_box( default = x^2 -1, label = "f(x) = ", width = 20),
                 graph += pt
             eval = find_root( deriv, -1000000, 1000000)
         
+        # Now print the approximations
+        pretty_print( text1 )
+        
         # Use Newton's Method to find the actual root, through 50 iterations 
-        # or until the iterations get close enoug
+        # or until the iterations get close enough
         for j in range(50):
             deriv = diff(f,x)(eval) * (x - eval) + f(eval)
             try:
                 new_eval = find_root(deriv, -1000000, 1000000)
             except:
-                print "The approximations do not converge."
+                pretty_print( "The approximations do not converge." )
                 break
             if abs(new_eval - eval) < 10^-12:
-                print "The actual root is at " + str(new_eval) + ", accurate to 10^-12."
+                pretty_print( "The actual root is at " + str(new_eval) + ", accurate to 10^-12." )
                 break
             eval = new_eval
             if j == 49:
-                print "After 50 iterations, the approximations do not converge."        
+                pretty_print( "After 50 iterations, the approximations do not converge." )       
         
     # Exception just in case    
     except:
-        print "Something went wrong. Try checking your boundaries and starting points."   
+        pretty_print( "Something went wrong. Try checking your boundaries and starting points." ) 
     
     # Show the graph!
     graph.show()
@@ -110,6 +119,6 @@ def newton( func = input_box( default = x^2 -1, label = "f(x) = ", width = 20),
 </div>
 
 <hr>
-Last modified on June 20th, 2017.
+Last modified on July 24th, 2017.
 </body>
 </html>
