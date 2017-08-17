@@ -43,13 +43,13 @@ $(function () {
 <script type="text/x-sage">
 
 @interact( layout = [ ['func'], ['eval', 'n'], ['x_min', 'x_max'], ['y_min', 'y_max'] ])
-def newton( func = input_box( default = x^2 -1, label = "f(x) = ", width = 20), 
-        eval = input_box( default = 2, label = "starting point", width = 5), 
+def newton( func = input_box( default = x^2 -1, label = "$f(x) = $", width = 20), 
+        eval = input_box( default = 3, label = "starting point", width = 5), 
         n = input_box( default = 3, label = "number of iterations", width = 5), 
-        x_min = input_box( default = -1, label = "x min", width = 5), 
-        x_max = input_box( default = 3, label = "x max", width = 5), 
-        y_min = input_box( default = -2, label = "y min", width = 5), 
-        y_max = input_box( default = 8, label = "y max", width = 5) ):
+        x_min = input_box( default = -1, label = "$x_{min}$", width = 5), 
+        x_max = input_box( default = 4, label = "$x_{max}$", width = 5), 
+        y_min = input_box( default = -2, label = "$y_{min}$", width = 5), 
+        y_max = input_box( default = 8, label = "$y_{max}$", width = 5) ):
      
     # Avoid the deprecation warning and prep the function graph        
     f = func.function(x)
@@ -64,9 +64,9 @@ def newton( func = input_box( default = x^2 -1, label = "f(x) = ", width = 20),
 
             # Print the approximation at a point, draw a dashed line to the approx, draw the point
             if j == n :
-                text1 += "Approximation " + str(j) + ": " + str(eval)
+                text1 += "Approximation " + str(j) + ": %6.7f" %eval
             else:
-                text1 += "Approximation " + str(j) + ": " + str(eval) + "\n"
+                text1 += "Approximation " + str(j) + ": %6.7f\n" %eval
             dashed = line( [(eval, f(eval)), (eval, 0)], linestyle = "--", color = '#ff5c33')
             pt = plot( point( (eval, f(eval)), color = 'red', size = 20 ))
             
@@ -119,6 +119,6 @@ def newton( func = input_box( default = x^2 -1, label = "f(x) = ", width = 20),
 </div>
 
 <hr>
-Last modified on July 24th, 2017.
+Last modified on August 17th, 2017.
 </body>
 </html>
